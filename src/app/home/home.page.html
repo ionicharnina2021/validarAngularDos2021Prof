@@ -4,12 +4,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" [formGroup]="controlForm">
-   <form>
+<ion-content [fullscreen]="true">
+  <form [formGroup]="controlForm">
     <ion-item>
-      <ion-label *ngIf="controlForm" > su puta madre</ion-label>      
-      <ion-input formControlName="miControl" ></ion-input>
+      <ion-input formControlName="miControl"></ion-input>
     </ion-item>
-    <!-- <ion-item> is dirty {{getFormControl().get( 'miControl').dirty}} </ion-item> -->
+    <ion-item *ngIf="homeControlService.validateControl('miControl')">
+      <ion-label
+        >{{homeControlService.getErrorMessage('miControl',controlForm.get('miControl').errors)
+        }}</ion-label>       
+    </ion-item>
   </form>
 </ion-content>

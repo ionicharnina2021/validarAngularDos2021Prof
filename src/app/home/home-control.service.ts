@@ -1,6 +1,11 @@
 import { MyFormGroup } from './../validators/myformgroup';
 import { Injectable } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import {
+  FormControl,
+  Validators,
+  FormGroup,
+  ValidationErrors,
+} from '@angular/forms';
 import { MyFormControl } from '../validators/myFormControl';
 
 @Injectable({
@@ -9,7 +14,12 @@ import { MyFormControl } from '../validators/myFormControl';
 export class HomeControlService {
   private _myFormGroup: MyFormGroup;
   regex: string | RegExp;
+
+  validationMessages = new Map<string, Map<string, string>>();
+  miControlMap = new Map<string, string>();
   constructor() {
+    this.miControlMap.set('minlength', 'No se si funcionara');
+    this.validationMessages.set('miControl', this.miControlMap);
     this._myFormGroup = new MyFormGroup([
       new MyFormControl(
         new FormControl('', [Validators.minLength(3)]),
@@ -31,10 +41,9 @@ export class HomeControlService {
         'regularDos'
       ),
     ]);
-    let prueba=this.formGoup.controls;
-    let cosa=this.formGoup.get('miControl');
-    console.log("nose");
-    
+    let prueba = this.formGoup.controls;
+    let cosa = this.formGoup.get('miControl');
+    console.log('nose');
   }
 
   /**
@@ -46,5 +55,15 @@ export class HomeControlService {
   }
   public get formGoup(): FormGroup {
     return this.myFormGroup.formGroup;
+  }
+  validateControl(element): boolean {
+    return (
+      this.formGoup.get('miControl').dirty &&
+      !this.formGoup.get('miControl').valid
+    );
+  }
+  getErrorMessage(control, error: ValidationErrors) {
+    // console.log(this.validationMessages.get(control).get(Object.keys(error)[0]));
+    return this.validationMessages.get(control).get(Object.keys(error)[0]);
   }
 }
