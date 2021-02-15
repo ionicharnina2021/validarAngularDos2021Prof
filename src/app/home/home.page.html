@@ -5,13 +5,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <form [formGroup]="controlForm">
-    <ion-item>
-      <ion-input formControlName="miControl"></ion-input>
+  <form [formGroup]="controlForm" *ngFor="let item of nombreControles" >
+    <ion-label>{{item}}</ion-label>
+    <ion-item >
+      <ion-input [formControlName]=item></ion-input>
     </ion-item>
-    <ion-item *ngIf="homeControlService.validateControl('miControl')">
+    <ion-item *ngIf="homeControlService.validateControl(item)">
       <ion-label
-        >{{homeControlService.getErrorMessage('miControl',controlForm.get('miControl').errors)
+        >{{homeControlService.getErrorMessage(item,controlForm.get(item).errors)
         }}</ion-label>       
     </ion-item>
   </form>

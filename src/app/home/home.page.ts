@@ -9,7 +9,9 @@ import { Component } from '@angular/core';
 export class HomePage {
   algo;
   public controlForm;
+  public nombreControles;
   constructor(public homeControlService: HomeControlService) {
     this.controlForm = homeControlService.formGoup;
+    this.nombreControles=homeControlService.nombreControles;
   }
 }
