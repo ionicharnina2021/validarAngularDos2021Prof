@@ -1,35 +1,16 @@
-import { FormControl } from '@angular/forms';
-export class MyFormControl {
-  constructor(private _formControl: FormControl, private _name: string) {}
-  /**
-   * Getter formControl
-   * @return {FormControl}
-   */
-  public get formControl(): FormControl {
-    return this._formControl;
+import { AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
+export class MyFormControl extends FormControl {
+  validationMessages = new Map<string, string>();
+  constructor(formState?: any, validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null, asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null){
+    super(formState,validatorOrOpts,asyncValidator)    
+  };
+
+  public insertValidationMessage(error: string, message: string) {
+    this.validationMessages.set(error, message);
   }
 
-  /**
-   * Getter name
-   * @return {string}
-   */
-  public get name(): string {
-    return this._name;
+  public getValidationMessage(error: string): string {
+    return this.validationMessages.get(error);
   }
-
-  /**
-   * Setter formControl
-   * @param {FormControl} value
-   */
-  public set formControl(value: FormControl) {
-    this._formControl = value;
-  }
-
-  /**
-   * Setter name
-   * @param {string} value
-   */
-  public set name(value: string) {
-    this._name = value;
-  }
+  
 }

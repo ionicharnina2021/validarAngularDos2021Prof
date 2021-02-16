@@ -11,7 +11,7 @@ export class HomePage {
   public controlForm;
   public nombreControles;
   constructor(public homeControlService: HomeControlService) {
-    this.controlForm = homeControlService.formGoup;
+    this.controlForm = homeControlService.gerFormGroup();
     this.nombreControles=homeControlService.nombreControles;
   }
 }

@@ -3,27 +3,41 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export class MyFormGroup {
   private _formGroup: FormGroup;
-  private myMap = new Map<String, FormControl>();
+  // private myMap = new Map<string, FormControl>();
+  // private nameMap = new Map<string, string>();
 
-
-  constructor(private myFormControls: MyFormControl[]) {
+  constructor(
+    private nameFields: string[],
+    private nameControl: string[],
+    private formControls: MyFormControl[]
+  ) {
     this._formGroup = new FormGroup({});
-    myFormControls.forEach((element) => {
-      this.insertarControl(element.name, element.formControl);
-    });
+    for (let index = 0; index < nameFields.length; index++) {
+      this.formGroup.addControl(nameControl[index], formControls[index]);
+    }
+  }
+
+  public insertarValidationMessages(
+    nameControl: string,
+    errors: string[],
+    messages: string[]
+  ) {
+    let control = this.getControl(nameControl);
+    for (let index = 0; index < errors.length; index++) {
+      control.insertValidationMessage(errors[index], messages[index]);
+    }
   }
 
   insertarControl(key: string, value: FormControl) {
-    this._formGroup.addControl(key, value);
-    this.myMap.set(key, value);
+    this.formGroup.addControl(key, value);
   }
-  getControl(key: string) {
-    this._formGroup.get(key);
+
+  public getControl(key: string): MyFormControl {
+    let retorno=this.formGroup.get(key);
+    return <MyFormControl> retorno;
   }
 
   public get formGroup(): FormGroup {
-		return this._formGroup;
-	}
-
-  
+    return this._formGroup;
+  }
 }

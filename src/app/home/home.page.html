@@ -6,13 +6,13 @@
 
 <ion-content [fullscreen]="true">
   <form [formGroup]="controlForm" *ngFor="let item of nombreControles" >
-    <ion-label>{{item}}</ion-label>
     <ion-item >
-      <ion-input [formControlName]=item></ion-input>
+    <ion-label>{{item}}</ion-label>
+      <ion-input  [formControlName]=item></ion-input>
     </ion-item>
     <ion-item *ngIf="homeControlService.validateControl(item)">
       <ion-label
-        >{{homeControlService.getErrorMessage(item,controlForm.get(item).errors)
+        >{{homeControlService.getErrorMessage(item)
         }}</ion-label>       
     </ion-item>
   </form>
